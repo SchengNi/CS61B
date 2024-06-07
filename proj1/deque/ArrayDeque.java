@@ -93,7 +93,7 @@ public class ArrayDeque<T> {
                 first = 0;
             } else {
                 items[first] = null;
-                first = first - 1;
+                first = first + 1;
             }
             arrayUsage();
         }
@@ -113,7 +113,7 @@ public class ArrayDeque<T> {
                 last = itLen - 1;
             } else {
                 items[last] = null;
-                last = last + 1;
+                last = last - 1;
             }
             arrayUsage();
         }
