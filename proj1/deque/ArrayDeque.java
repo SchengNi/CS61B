@@ -70,13 +70,24 @@ public class ArrayDeque<T> {
 
     public void resize(int n) {
         T[] tem = (T[]) new Object[n];
-        System.arraycopy(items, 0 ,tem, 0, size);
+        if (first > last) {
+            System.arraycopy(items,first,tem,0,size - first);
+            System.arraycopy(items,0,tem,size - first,first);
+        } else {
+            System.arraycopy(items, first ,tem, 0, size);
+        }
+        first = 0;
+        last = size - 1;
         items = tem;
+        itLen = n;
     }
 
     public void printDeque() {
-        for (int i = Math.max(first, last); i <= Math.min(first, last); i += 1) {
-            System.out.print(items[i] + " ");
+        int index = first;
+        for (int i = 0; i < size; i += 1) {
+            index = index % itLen;
+            System.out.print(items[index] + " ");
+            index += 1;
         }
         System.out.print("\n");
     }
@@ -122,7 +133,7 @@ public class ArrayDeque<T> {
     }
 
     /** Check the array usage. */
-    public void arrayUsage() {
+    private void arrayUsage() {
         if (itLen != 8){
             double abs = Math.abs(first - last);
             double usage = abs / itLen;
@@ -136,7 +147,6 @@ public class ArrayDeque<T> {
 
     public T get(int index) {
         T getItem;
-        int abs = Math.abs(first - last);
         if (size == 0 || index > size - 1) {
             return  null;
         } else {
