@@ -3,7 +3,6 @@ package deque;
 import edu.princeton.cs.algs4.StdRandom;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import net.sf.saxon.functions.ConstantFunction;
 
 
 /** Performs some basic linked list tests. */

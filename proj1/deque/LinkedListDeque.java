@@ -1,7 +1,5 @@
 package deque;
 
-import net.sf.saxon.functions.ConstantFunction;
-
 public class LinkedListDeque<T> {
     public class Node {
         /** inner class Node. */
