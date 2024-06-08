@@ -59,9 +59,16 @@ public class LinkedListDeque<T> {
 
     public void printDeque() {
         Node temp = firstsentinel.next;
-        if (temp != lastsentinel) {
-            System.out.print(temp.item + " ");
-        } else {
+        if (size != 0) {
+            for (int i = 0; i < size; i += 1){
+                if (i == 0) {
+                    System.out.print(temp.item);
+                    temp = temp.next;
+                } else {
+                    System.out.print(" " + temp.item);
+                    temp = temp.next;
+                }
+            }
             System.out.print('\n');
         }
     }

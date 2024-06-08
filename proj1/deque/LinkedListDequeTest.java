@@ -1,5 +1,6 @@
 package deque;
 
+import edu.princeton.cs.algs4.StdRandom;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -16,22 +17,22 @@ public class LinkedListDequeTest {
 
         LinkedListDeque<String> lld1 = new LinkedListDeque<String>();
 
-		assertTrue("A newly initialized LLDeque should be empty", lld1.isEmpty());
-		lld1.addFirst("front");
+        assertTrue("A newly initialized LLDeque should be empty", lld1.isEmpty());
+        lld1.addFirst("front");
 
-		// The && operator is the same as "and" in Python.
-		// It's a binary operator that returns true if both arguments true, and false otherwise.
+        // The && operator is the same as "and" in Python.
+        // It's a binary operator that returns true if both arguments true, and false otherwise.
         assertEquals(1, lld1.size());
         assertFalse("lld1 should now contain 1 item", lld1.isEmpty());
 
-		lld1.addLast("middle");
-		assertEquals(2, lld1.size());
+        lld1.addLast("middle");
+        assertEquals(2, lld1.size());
 
-		lld1.addLast("back");
-		assertEquals(3, lld1.size());
+        lld1.addLast("back");
+        assertEquals(3, lld1.size());
 
-		System.out.println("Printing out deque: ");
-		lld1.printDeque();
+        System.out.println("Printing out deque: ");
+        lld1.printDeque();
     }
 
     @Test
@@ -39,16 +40,16 @@ public class LinkedListDequeTest {
     public void addRemoveTest() {
 
         LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
-		// should be empty
-		assertTrue("lld1 should be empty upon initialization", lld1.isEmpty());
+        // should be empty
+        assertTrue("lld1 should be empty upon initialization", lld1.isEmpty());
 
-		lld1.addFirst(10);
-		// should not be empty
-		assertFalse("lld1 should contain 1 item", lld1.isEmpty());
+        lld1.addFirst(10);
+        // should not be empty
+        assertFalse("lld1 should contain 1 item", lld1.isEmpty());
 
-		lld1.removeFirst();
-		// should be empty
-		assertTrue("lld1 should be empty after removal", lld1.isEmpty());
+        lld1.removeFirst();
+        // should be empty
+        assertTrue("lld1 should be empty after removal", lld1.isEmpty());
     }
 
     @Test
@@ -75,8 +76,8 @@ public class LinkedListDequeTest {
     /* Check if you can create LinkedListDeques with different parameterized types*/
     public void multipleParamTest() {
 
-        LinkedListDeque<String>  lld1 = new LinkedListDeque<String>();
-        LinkedListDeque<Double>  lld2 = new LinkedListDeque<Double>();
+        LinkedListDeque<String> lld1 = new LinkedListDeque<String>();
+        LinkedListDeque<Double> lld2 = new LinkedListDeque<Double>();
         LinkedListDeque<Boolean> lld3 = new LinkedListDeque<Boolean>();
 
         lld1.addFirst("string");
@@ -120,44 +121,110 @@ public class LinkedListDequeTest {
     }
 
     @Test
-    public void getTest() {
-        LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
-        lld1.addFirst(15);
-        lld1.addFirst(10);
-        lld1.addFirst(5);
-        lld1.addLast(20);
-        lld1.addLast(25);
-        lld1.addLast(30);
+    public void addTest() {
+        LinkedListDeque<Integer> testLink01 = new LinkedListDeque<>();
+        LinkedListDeque<Double> testLink02 = new LinkedListDeque<>();
+        int N = 500;
+        int item01;
+        double item02;
+        for (int i = 0; i < N; i += 1) {
+            int operationNumber = StdRandom.uniform(0, 1000);
+            testLink01.addFirst(operationNumber);
+            assertEquals(i + 1, testLink01.size());
+            item01 = testLink01.get(0);
+            assertEquals(operationNumber, item01);
+        }
 
-        int removenumber = lld1.removeFirst();
-        assertEquals(5, removenumber);
-        removenumber = lld1.removeLast();
-        assertEquals(30, removenumber);
+        for (int i = 0; i < N; i += 1) {
+            double operationNumber = StdRandom.uniform(0, 500);
+            testLink02.addLast(operationNumber);
+            assertEquals(i + 1, testLink02.size());
+            item02 = testLink02.get(i);
+            assertEquals(operationNumber,item02,0.0000000000);
+        }
+    }
 
-        int getnumber = lld1.get(0);
-        assertEquals(10, getnumber);
-        getnumber = lld1.get(3);
-        assertEquals(25, getnumber);
+    @Test public void removeTest() {
+        LinkedListDeque<Integer> testLink01 = new LinkedListDeque<>();
+        LinkedListDeque<Double> testLink02 = new LinkedListDeque<>();
+        int N = 50;
+        for (int i = 0; i < N; i += 1) {
+            int operationNumber = StdRandom.uniform(0, 1000);
+            testLink01.addFirst(operationNumber);
+
+            int gitItem = testLink01.get(0);
+            assertEquals(operationNumber,gitItem);
+        }
+        for (int i = 0; i < N; i += 1) {
+            int testSize = testLink01.size();
+            testLink01.removeFirst();
+
+            assertEquals(testSize - 1, testLink01.size());
+        }
+        assertTrue(testLink01.removeFirst() == null);
+
+        for (int i = 0; i < N; i += 1) {
+            double operationNumber = StdRandom.uniform(0, 1000);
+            testLink02.addLast(operationNumber);
+
+        }
+        for (int i = 0; i < N; i += 1) {
+            int testSize = testLink02.size();
+            testLink02.removeLast();
+            assertEquals(testSize - 1, testLink02.size());
+        }
+        assertTrue(testLink02.removeLast() == null);
     }
 
     @Test
-    public void getRecursiveTest() {
-        LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
-        lld1.addFirst(300);
-        lld1.addFirst(200);
-        lld1.addFirst(100);
-        lld1.addLast(400);
-        lld1.addLast(500);
-        lld1.addLast(600);
+    public void isEmptyTest() {
+        LinkedListDeque<Integer> testLink = new LinkedListDeque<>();
+        assertTrue(testLink.isEmpty());
+        int N =100;
+        int itemCount = 0;
 
-        int removenumber = lld1.removeFirst();
-        assertEquals(100, removenumber);
-        removenumber = lld1.removeLast();
-        assertEquals(600, removenumber);
+        for (int i =0; i < N; i += 1) {
+            int operatironNumber = StdRandom.uniform(0, 1000);
+            int selectNumber = StdRandom.uniform(0, 2);
+            if (selectNumber == 0) {
+                testLink.addFirst(operatironNumber);
+                itemCount += 1;
+                int getItem = testLink.get(0);
 
-        int getnumber = lld1.getRecursive(0);
-        assertEquals(200, getnumber);
-        getnumber = lld1.getRecursive(3);
-        assertEquals(500, getnumber);
+                assertEquals(itemCount, testLink.size());
+                assertEquals(operatironNumber, getItem);
+            } else if (selectNumber == 1 && itemCount > 0) {
+                int getItem = testLink.get(0);
+                int lostItem = testLink.removeFirst();
+                itemCount -= 1;
+
+                 assertEquals(getItem, lostItem);
+                 assertEquals(itemCount, testLink.size());
+            }
+        }
+    }
+
+    @Test
+    public void printDequeText() {
+        LinkedListDeque<String> testLink = new LinkedListDeque<>();
+        testLink.addFirst("I");
+        testLink.addLast("am");
+        testLink.addLast("a");
+        testLink.addLast("student");
+
+        testLink.printDeque();
+    }
+
+    @Test
+    public void getTest() {
+        LinkedListDeque<Integer> testLink = new LinkedListDeque<>();
+        int N = 10;
+        for (int i = 0; i < N; i += 1) {
+            testLink.addLast(i);
+        }
+        for (int j =0; j < N; j += 1) {
+            int getNumber = testLink.get(j);
+            assertEquals(j,getNumber);
+        }
     }
 }

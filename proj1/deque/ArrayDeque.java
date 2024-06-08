@@ -84,12 +84,20 @@ public class ArrayDeque<T> {
 
     public void printDeque() {
         int index = first;
-        for (int i = 0; i < size; i += 1) {
-            index = index % itLen;
-            System.out.print(items[index] + " ");
-            index += 1;
+        if (size != 0) {
+            for (int i = 0; i < size; i += 1) {
+                if (i == 0) {
+                    index = index % itLen;
+                    System.out.print(items[index]);
+                    index += 1;
+                } else {
+                    index = index % itLen;
+                    System.out.print(" " + items[index]);
+                    index += 1;
+                }
+            }
+            System.out.print("\n");
         }
-        System.out.print("\n");
     }
 
     public T removeFirst() {
