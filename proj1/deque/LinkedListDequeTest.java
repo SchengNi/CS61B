@@ -227,4 +227,49 @@ public class LinkedListDequeTest {
             assertEquals(j,getNumber);
         }
     }
+
+    @Test
+    public  void equalsTest() {
+        LinkedListDeque<Integer> testLink01 = new LinkedListDeque<>();
+        LinkedListDeque<Integer> testLink02 = new LinkedListDeque<>();
+        LinkedListDeque<Integer> testLink03 = new LinkedListDeque<>();
+        int testSample01 = 0;
+        LinkedListDeque<Integer> testSample02 = new LinkedListDeque<>();
+        LinkedListDeque<Integer> testSample03 = new LinkedListDeque<>();
+        int N = 100;
+
+        //testSample01 isn't Deque
+        testLink01.addLast(5);
+        assertFalse(testLink01.equals(testSample01));
+
+        //testSample02 is Deque but not equals
+        testLink02.addLast(10);
+        testLink02.addFirst(5);
+        testSample02.addFirst(10);
+        testSample02.addLast(5);
+
+        assertFalse(testLink02.equals(testSample02));
+
+        testSample02 = null;
+
+        assertFalse(testLink02.equals(testSample02));
+
+        //testSample03 is equals to the testLink03
+        for (int i =0; i < N; i += 1) {
+            int oprerationNumber = StdRandom.uniform(0,100);
+            testLink03.addLast(oprerationNumber);
+            testSample03.addLast(oprerationNumber);
+        }
+        assertTrue(testLink03.equals(testSample03));
+
+        testLink03.removeFirst();
+
+        assertFalse(testLink03.equals(testSample03));
+
+        testSample03.removeFirst();
+        assertTrue(testLink03.equals(testSample03));
+
+
+
+    }
 }

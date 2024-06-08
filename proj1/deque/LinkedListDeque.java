@@ -1,5 +1,7 @@
 package deque;
 
+import net.sf.saxon.functions.ConstantFunction;
+
 public class LinkedListDeque<T> {
     public class Node {
         /** inner class Node. */
@@ -122,6 +124,24 @@ public class LinkedListDeque<T> {
             return node.item;
         } else {
             return getRecursiveHelper(index - 1, node.next);
+        }
+    }
+
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        } else {
+            if (o instanceof LinkedListDeque) {
+                if (((LinkedListDeque<?>) o).size() == size) {
+                    for (int i = 0; i < size; i += 1) {
+                        if (((LinkedListDeque<?>) o).get(i) != get(i)) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

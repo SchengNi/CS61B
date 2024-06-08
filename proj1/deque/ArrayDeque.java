@@ -163,4 +163,22 @@ public class ArrayDeque<T> {
         }
         return getItem;
     }
+
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        } else {
+            if (o instanceof ArrayDeque) {
+                if (((ArrayDeque<?>) o).size() == size) {
+                    for (int i = 0; i < size; i += 1) {
+                        if (((ArrayDeque<?>) o).get(i) != get(i)) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
 }

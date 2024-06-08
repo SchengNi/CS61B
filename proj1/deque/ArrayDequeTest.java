@@ -99,4 +99,49 @@ public class ArrayDequeTest {
             assertEquals(j,getNumber);
         }
     }
+
+    @Test
+    public  void equalsTest() {
+        ArrayDeque<Integer> testArray01 = new ArrayDeque<>();
+        ArrayDeque<Integer> testArray02 = new ArrayDeque<>();
+        ArrayDeque<Integer> testArray03= new ArrayDeque<>();
+        int testSample01 = 0;
+        ArrayDeque<Integer> testSample02 = new ArrayDeque<>();
+        ArrayDeque<Integer> testSample03 = new ArrayDeque<>();
+        int N = 100;
+
+        //testSample01 isn't Deque
+        testArray01.addLast(5);
+        assertFalse(testArray01.equals(testSample01));
+
+        //testSample02 is Deque but not equals
+        testArray02.addLast(10);
+        testArray02.addFirst(5);
+        testSample02.addFirst(10);
+        testSample02.addLast(5);
+
+        assertFalse(testArray02.equals(testSample02));
+
+        testSample02 = null;
+
+        assertFalse(testArray02.equals(testSample02));
+
+        //testSample03 is equals to the testLink03
+        for (int i =0; i < N; i += 1) {
+            int oprerationNumber = StdRandom.uniform(0,100);
+            testArray03.addLast(oprerationNumber);
+            testSample03.addLast(oprerationNumber);
+        }
+        assertTrue(testArray03.equals(testSample03));
+
+        testArray03.removeFirst();
+
+        assertFalse(testArray03.equals(testSample03));
+
+        testSample03.removeFirst();
+        assertTrue(testArray03.equals(testSample03));
+
+
+
+    }
 }
