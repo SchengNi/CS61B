@@ -1,5 +1,7 @@
 package deque;
 
+import java.util.Iterator;
+
 public class LinkedListDeque<T> {
     public class Node {
         /** inner class Node. */
@@ -128,6 +130,8 @@ public class LinkedListDeque<T> {
     public boolean equals(Object o) {
         if (o == null) {
             return false;
+        } if (o == this) {
+            return true;
         } else {
             if (o instanceof LinkedListDeque) {
                 if (((LinkedListDeque<?>) o).size() == size) {
@@ -140,6 +144,25 @@ public class LinkedListDeque<T> {
                 }
             }
             return false;
+        }
+    }
+
+    public Iterator<T> iterator() {
+        return new LinkIterator();
+    }
+
+    public class LinkIterator implements Iterator<T> {
+        int IndexSize;
+        public LinkIterator() {
+            IndexSize = 0;
+        }
+        public boolean hasNext() {
+            return IndexSize < size;
+        }
+        public T next() {
+            T returnItem = get(IndexSize);
+            IndexSize += 1;
+            return returnItem;
         }
     }
 }

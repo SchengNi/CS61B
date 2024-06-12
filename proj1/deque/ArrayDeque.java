@@ -1,5 +1,7 @@
 package deque;
 
+import java.util.Iterator;
+
 public class ArrayDeque<T> {
     private T[] items;
     private int size;
@@ -71,10 +73,10 @@ public class ArrayDeque<T> {
     public void resize(int n) {
         T[] tem = (T[]) new Object[n];
         if (first > last) {
-            System.arraycopy(items,first,tem,0,itLen - first);
-            System.arraycopy(items,0,tem,last,last + 1);
+            System.arraycopy(items, first, tem, 0, itLen - first);
+            System.arraycopy(items, 0, tem, last, last + 1);
         } else {
-            System.arraycopy(items, first ,tem, 0, last);
+            System.arraycopy(items, first, tem, 0, size);
         }
         first = 0;
         last = size - 1;
@@ -140,9 +142,11 @@ public class ArrayDeque<T> {
         return arratElement;
     }
 
-    /** Check the array usage. */
+    /**
+     * Check the array usage.
+     */
     private void arrayUsage() {
-        if (itLen != 8){
+        if (itLen != 8) {
             double abs = Math.abs(first - last);
             double usage = abs / itLen;
             double usageNeed = 0.25;
@@ -156,7 +160,7 @@ public class ArrayDeque<T> {
     public T get(int index) {
         T getItem;
         if (size == 0 || index > size - 1) {
-            return  null;
+            return null;
         } else {
             int relIndex = (first + index) % itLen;
             getItem = items[relIndex];
@@ -167,6 +171,9 @@ public class ArrayDeque<T> {
     public boolean equals(Object o) {
         if (o == null) {
             return false;
+        }
+        if (o == this) {
+            return true;
         } else {
             if (o instanceof ArrayDeque) {
                 if (((ArrayDeque<?>) o).size() == size) {
@@ -179,6 +186,28 @@ public class ArrayDeque<T> {
                 }
             }
             return false;
+        }
+    }
+
+    public Iterator<T> iterator() {
+        return new ArrayIterator();
+    }
+
+    private class ArrayIterator implements Iterator<T> {
+        private int IndexSize;
+
+        public ArrayIterator() {
+            IndexSize = 0;
+        }
+
+        public boolean hasNext() {
+            return IndexSize < size;
+        }
+
+        public T next() {
+            T returnItem = get(IndexSize);
+            IndexSize += 1;
+            return returnItem;
         }
     }
 }
