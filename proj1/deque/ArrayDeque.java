@@ -71,10 +71,10 @@ public class ArrayDeque<T> {
     public void resize(int n) {
         T[] tem = (T[]) new Object[n];
         if (first > last) {
-            System.arraycopy(items,first,tem,0,size - first);
-            System.arraycopy(items,0,tem,size - first,first);
+            System.arraycopy(items,first,tem,0,itLen - first);
+            System.arraycopy(items,0,tem,last,last + 1);
         } else {
-            System.arraycopy(items, first ,tem, 0, size);
+            System.arraycopy(items, first ,tem, 0, last);
         }
         first = 0;
         last = size - 1;
