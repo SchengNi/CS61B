@@ -116,7 +116,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
             items[last] = null;
         } else {
             items[last] = null;
-            last = (last - 1) % items.length;
+            last = (last - 1 +items.length) % items.length;
         }
         size -= 1;
         arrayUsage();
@@ -140,29 +140,12 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
 
     @Override
     public T get(int index) {
-        T getItem = null;
-        int numberIndex;
-        int ralIndex = index;
-        if (first > last) {
-            ralIndex = -index;
+        int getIndex = 0;
+        if (index > size - 1 ) {
+            return null;
         }
-        if (index >= 0) {
-            if (index <= size - 1) {
-                numberIndex = (first + ralIndex + items.length) % items.length;
-                getItem = items[numberIndex];
-            } else {
-                return null;
-            }
-        }
-        if (index < 0) {
-            if (Math.abs(index) <= size - 1) {
-                numberIndex = (last + 1 + ralIndex + items.length) % items.length;
-                getItem = items[numberIndex];
-            } else {
-                return null;
-            }
-        }
-        return getItem;
+        getIndex = (first + index) % items.length;
+        return items[getIndex];
     }
 
     public boolean equals(Object o) {
@@ -172,20 +155,17 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
         if (o == this) {
             return true;
         }
-        if (! (o instanceof ArrayDeque)) {
+        if (!(o instanceof Deque)) {
             return false;
         }
-        if (this.size() != ((ArrayDeque<?>) o).size()) {
+        Deque<T> oa = (Deque<T>) o;
+        if (this.size() != oa.size()) {
             return false;
         }
         for (int i = 0; i < this.size(); i += 1) {
-            T thisItem = this.get(i);
-            Object otherItem = ((ArrayDeque<?>) o).get(i);
-            if (thisItem == null && otherItem != null) {
+            if (!(oa.get(i).equals(this.get(i)))) {
                 return false;
             }
-            if (thisItem != null && !thisItem.equals(otherItem))
-                return false;
         }
         return true;
     }
