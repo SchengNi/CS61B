@@ -105,43 +105,39 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
 
     @Override
     public T removeFirst() {
-        T arrayElement = items[first];
         if (size == 0) {
             return null;
-        } else if (size == 1) {
-            items[first] = null;
-        } else {
+        }
+        T arrayElement = items[first];
+        items[first] = null;
+        size -= 1;
+        if (size > 1) {
             if (first == itLen - 1) {
-                items[itLen - 1] = null;
                 first = 0;
             } else {
-                items[first] = null;
                 first = first + 1;
             }
             arrayUsage();
         }
-        size -= 1;
         return arrayElement;
     }
 
     @Override
     public T removeLast() {
-        T arratElement = items[last];
         if (size == 0) {
             return null;
-        } else if (size == 1) {
-            items[last] = null;
-        } else {
+        }
+        T arratElement = items[last];
+        items[last] = null;
+        size -= 1;
+        if (size > 1) {
             if (last == 0) {
-                items[0] = null;
                 last = itLen - 1;
             } else {
-                items[last] = null;
                 last = last - 1;
             }
-            arrayUsage();
         }
-        size -= 1;
+            arrayUsage();
         return arratElement;
     }
 
@@ -178,19 +174,23 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
         }
         if (o == this) {
             return true;
-        } else {
-            if (o instanceof ArrayDeque) {
-                if (((ArrayDeque<?>) o).size() == size) {
-                    for (int i = 0; i < size; i += 1) {
-                        if (((ArrayDeque<?>) o).get(i) != get(i)) {
-                            return false;
-                        }
-                    }
-                    return true;
-                }
-            }
+        }
+        if (! (o instanceof ArrayDeque)) {
             return false;
         }
+        if (this.size() != ((ArrayDeque<?>) o).size()) {
+            return false;
+        }
+        for (int i = 0; i < this.size(); i += 1) {
+            T thisItem = this.get(i);
+            Object otherItem = ((ArrayDeque<?>) o).get(i);
+            if (thisItem == null && otherItem != null) {
+                return false;
+            }
+            if (thisItem != null && thisItem != otherItem)
+                return false;
+        }
+        return true;
     }
 
     public Iterator<T> iterator() {
