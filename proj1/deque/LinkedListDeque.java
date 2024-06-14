@@ -2,20 +2,20 @@ package deque;
 
 import java.util.Iterator;
 
-public class LinkedListDeque<T> implements Deque<T> {
-    public class Node {
+public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
+    private class Node {
         /** inner class Node. */
         private T item;
         private Node pre;
         private Node next;
 
         /** sentinel Node */
-        public Node(Node ppre, Node nnext) {
+        private Node(Node ppre, Node nnext) {
             pre = ppre;
             next = nnext;
         }
         /** normal Node */
-        public Node(T n, Node ppre, Node nnext) {
+        private Node(T n, Node ppre, Node nnext) {
             item = n;
             pre = ppre;
             next = nnext;
@@ -155,7 +155,7 @@ public class LinkedListDeque<T> implements Deque<T> {
     }
 
     public class LinkIterator implements Iterator<T> {
-        int IndexSize;
+        private int IndexSize;
         public LinkIterator() {
             IndexSize = 0;
         }

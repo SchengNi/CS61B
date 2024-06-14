@@ -2,7 +2,8 @@ package deque;
 
 import java.util.Iterator;
 
-public class ArrayDeque<T> implements Deque<T>{
+
+public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
     private T[] items;
     private int size;
     private int itLen;
@@ -69,7 +70,7 @@ public class ArrayDeque<T> implements Deque<T>{
         return size;
     }
 
-    public void resize(int n) {
+    private void resize(int n) {
         T[] tem = (T[]) new Object[n];
         if (first > last) {
             System.arraycopy(items, first, tem, 0, itLen - first);
@@ -149,7 +150,7 @@ public class ArrayDeque<T> implements Deque<T>{
      */
     private void arrayUsage() {
         if (itLen != 8) {
-            double abs = Math.abs(first - last);
+            double abs = Math.abs(size);
             double usage = abs / itLen;
             double usageNeed = 0.25;
             if (usage < usageNeed) {
