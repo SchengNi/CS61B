@@ -149,7 +149,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
             if (thisItem == null && otherItem != null) {
                 return false;
             }
-            if (thisItem != null && otherItem != thisItem) {
+            if (thisItem != null && !thisItem.equals(otherItem)) {
                 return false;
             }
         }

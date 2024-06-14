@@ -23,45 +23,31 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
 
     @Override
     public void addFirst(T item) {
+        if (size == items.length) {
+            resize(items.length * 2);
+        }
         if (size == 0) {
             items[first] = item;
             size += 1;
         } else {
-            if (size < itLen) {
-                if (first == 0) {
-                    items[itLen - 1] = item;
-                    first = itLen - 1;
-                } else {
-                    items[first - 1] = item;
-                    first = first - 1;
-                }
-                size += 1;
-            } else {
-                resize(2 * itLen);
-                addFirst(item);
-            }
+            first = (first - 1 + items.length) % items.length;
+            items[first] = item;
+            size += 1;
         }
     }
 
     @Override
     public void addLast(T item) {
+        if (size == items.length) {
+            resize(items.length * 2);
+        }
         if (size == 0) {
             items[last] = item;
             size += 1;
         } else {
-            if (size < itLen) {
-                if (last == itLen - 1) {
-                    items[0] = item;
-                    last = 0;
-                } else {
-                    items[last + 1] = item;
-                    last = last + 1;
-                }
-                size += 1;
-            } else {
-                resize(2 * itLen);
-                addLast(item);
-            }
+            last = (last + 1 + items.length) % items.length;
+            items[last] = item;
+            size += 1;
         }
     }
 
@@ -73,8 +59,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
     private void resize(int n) {
         T[] tem = (T[]) new Object[n];
         if (first > last) {
-            System.arraycopy(items, first, tem, 0, itLen - first);
-            System.arraycopy(items, 0, tem, last, last + 1);
+            System.arraycopy(items, first, tem, 0, items.length - first);
+            System.arraycopy(items, 0, tem, items.length - first, last + 1);
         } else {
             System.arraycopy(items, first, tem, 0, size);
         }
@@ -109,16 +95,14 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
             return null;
         }
         T arrayElement = items[first];
-        items[first] = null;
-        size -= 1;
-        if (size > 1) {
-            if (first == itLen - 1) {
-                first = 0;
-            } else {
-                first = first + 1;
-            }
-            arrayUsage();
+        if (size == 1) {
+            items[first] = null;
+        } else {
+            items[first] = null;
+            first = (first + 1) % items.length;
         }
+        size -= 1;
+        arrayUsage();
         return arrayElement;
     }
 
@@ -128,16 +112,14 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
             return null;
         }
         T arratElement = items[last];
-        items[last] = null;
-        size -= 1;
-        if (size > 1) {
-            if (last == 0) {
-                last = itLen - 1;
-            } else {
-                last = last - 1;
-            }
+        if (size == 1) {
+            items[last] = null;
+        } else {
+            items[last] = null;
+            last = (last - 1) % items.length;
         }
-            arrayUsage();
+        size -= 1;
+        arrayUsage();
         return arratElement;
     }
 
@@ -158,12 +140,27 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
 
     @Override
     public T get(int index) {
-        T getItem;
-        if (size == 0 || index > size - 1) {
-            return null;
-        } else {
-            int relIndex = (first + index) % itLen;
-            getItem = items[relIndex];
+        T getItem = null;
+        int numberIndex;
+        int ralIndex = index;
+        if (first > last) {
+            ralIndex = -index;
+        }
+        if (index >= 0) {
+            if (index <= size - 1) {
+                numberIndex = (first + ralIndex + items.length) % items.length;
+                getItem = items[numberIndex];
+            } else {
+                return null;
+            }
+        }
+        if (index < 0) {
+            if (Math.abs(index) <= size - 1) {
+                numberIndex = (last + 1 + ralIndex + items.length) % items.length;
+                getItem = items[numberIndex];
+            } else {
+                return null;
+            }
         }
         return getItem;
     }
@@ -187,7 +184,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
             if (thisItem == null && otherItem != null) {
                 return false;
             }
-            if (thisItem != null && thisItem != otherItem)
+            if (thisItem != null && !thisItem.equals(otherItem))
                 return false;
         }
         return true;
